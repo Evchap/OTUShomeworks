@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-import asyncio
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,
@@ -16,27 +15,24 @@ from sqlalchemy import (
 
 from sqlalchemy.orm import (
     declarative_base,
-    scoped_session,
-    # async_scoped_session,
     sessionmaker,
     relationship,
 )
+from sqlalchemy.ext.asyncio import async_scoped_session
+from asyncio import current_task
 
 PG_CONN_URI = os.environ.get("SQLALCHEMY_PG_CONN_URI") or "postgresql+asyncpg://postgres:postgres@localhost/postgres"
 DB_URL = "sqlite:///homework-04.db"
 
 async def inittables():
-    async with engine.begin() as connection:
+    async with some_async_engine.begin() as connection:
         await connection.run_sync(Base.metadata.drop_all)
         await connection.run_sync(Base.metadata.create_all)
 
-
-engine = create_async_engine(PG_CONN_URI, echo=True,)
-
-Base = declarative_base(bind=engine)
-session_factory = sessionmaker(bind=engine, class_=AsyncSession)
-Session = scoped_session(session_factory)
-
+some_async_engine = create_async_engine(PG_CONN_URI, echo=True,)
+Base = declarative_base(bind=some_async_engine)
+async_session_factory = sessionmaker(some_async_engine, class_=AsyncSession)
+AsyncScopedSession = async_scoped_session(async_session_factory, scopefunc=current_task)
 
 
 class User(Base):
@@ -60,7 +56,7 @@ class User(Base):
         return str(self)
 
     posts = relationship("Post", back_populates="user")
-#    posts = relationship("Post", backref="user")
+
 
 class Post(Base):
     __tablename__ = "post"
@@ -86,27 +82,3 @@ class Post(Base):
 
 def create_tables():
     Base.metadata.create_all()
-
-def create_user(name: str, username: str, email: str)-> User:
-
-    session = Session()
-
-    user = User(name=name, username = username, email=email)
-    print("created", user)
-
-    session.add(user)
-    session.commit()
-    print("saved", user)
-    session.close()
-    return user
-
-
-# async def main():
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.drop_all)
-#         await conn.run_sync(Base.metadata.create_all)
-
-
-# if __name__ == "__main__":
-#     main()
-
