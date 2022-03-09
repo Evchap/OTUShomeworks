@@ -3,7 +3,8 @@ from models import (
     User,
     Post,
     inittables,
-    AsyncScopedSession,
+    Session,
+     # AsyncScopedSession,
 )
 from jsonplaceholder_requests import (
     USERS_DATA_URL,
@@ -15,7 +16,8 @@ async def async_main():
     await inittables()
     users = await send_request(USERS_DATA_URL)
     posts = await send_request(POSTS_DATA_URL)
-    async with AsyncScopedSession() as session:
+    # async with AsyncScopedSession() as session:
+    async with Session() as session:
         async with session.begin():
             for i in users:
                 session.add(User(id=i["id"], name=i["name"], username=i["username"], email=i["email"]))

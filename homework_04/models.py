@@ -32,7 +32,8 @@ async def inittables():
 some_async_engine = create_async_engine(PG_CONN_URI, echo=True,)
 Base = declarative_base(bind=some_async_engine)
 async_session_factory = sessionmaker(some_async_engine, class_=AsyncSession)
-AsyncScopedSession = async_scoped_session(async_session_factory, scopefunc=current_task)
+# AsyncScopedSession = async_scoped_session(async_session_factory, scopefunc=current_task)
+Session = async_scoped_session(async_session_factory, scopefunc=current_task)
 
 
 class User(Base):
