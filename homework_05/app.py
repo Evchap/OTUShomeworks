@@ -8,12 +8,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html', title="/")
+    return render_template('index.html')
 
 
 @app.route("/about/")
 def about():
-    return render_template('about.html', title="about")
+    return render_template('about.html')
 
 with app.test_request_context():
     print(url_for('index'))
