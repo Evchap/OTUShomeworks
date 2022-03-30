@@ -22,3 +22,5 @@ with app.test_request_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# Run on   http://127.0.0.1:5000/

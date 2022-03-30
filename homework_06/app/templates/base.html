@@ -11,14 +11,14 @@
     <title>title, base.html</title>
   </head>
   <body>
-    <h1 class="text-center">OTUS homework_05</h1>
-    <h2 class="text-danger">base_text-primary. class="text-danger"</h2>
+    <h1 class="text-center">OTUS homework_06</h1>
+    <h2 class="text-danger">"Взаимодействие между контейнерами"</h2>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid"><a class="navbar-brand" href = "{{url_for('about') }}">URL_FOR Link to the page /about/</a>
-            <a class="navbar-brand" href = "{{url_for('index') }}">URL_FOR Link to the page "/"</a>
+        <div class="container-fluid"><a class="navbar-brand" href = "{{url_for('about') }}">Link to the page /about/</a>
+            <a class="navbar-brand" href = "{{url_for('index') }}">Link to the page "/"</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">
+                <span class="navbar-toggler-icon"> </span>
             </button>
         </div>
     </nav>
@@ -26,7 +26,6 @@
     <br />
     <br />
     <br />
-
     {% block content %}
     {% endblock %}
   </body>
